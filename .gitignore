@@ -1,3 +1,7 @@
 /Src/Debug
 /Src/.vs
 /Src/Release
+/Src/x64
+/Src/x86
+/Src/Retail
+*.vcxproj.user
