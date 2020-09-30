@@ -66,17 +66,19 @@ public:
 		int totalCount = total();
 		int count = 0;
 		
+		pgNode<T>* MaxNode = nullptr;
 		while(count < totalCount)
 		{
 			pgNode<T>* findNode = m_head;
 			pgNode<T>* nextNode = findNode->getPointer();
-			while (nextNode != nullptr)
+			while (nextNode != MaxNode)
 			{
 				if(lambda(findNode->getData(), nextNode->getData()))
 					swap(findNode, nextNode);
 				findNode = nextNode;
 				nextNode = nextNode->getPointer();
 			}
+			MaxNode = findNode;
 			count++;
 		}
 	}
