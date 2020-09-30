@@ -11,9 +11,9 @@ int main()
     newlinklist.add(1333334);
     newlinklist.add(98463);
 
-    //newlinklist.remove(2);
+    newlinklist.remove(2);
 
-    //newlinklist.addToStart(12345);
+    newlinklist.addToStart(12345);
 
     newlinklist.sort();
     int poggers = newlinklist.find(1);
