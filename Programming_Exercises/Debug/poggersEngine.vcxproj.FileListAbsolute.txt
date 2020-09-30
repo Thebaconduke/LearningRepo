@@ -1,2 +1,0 @@
-C:\Users\New\source\repos\poggersEngine\Debug\poggersEngine.exe
-C:\Users\New\source\repos\poggersEngine\Debug\poggersEngine.pdb
