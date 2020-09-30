@@ -1,6 +1,7 @@
 #pragma once
 using namespace std;
 
+//define logging
 
 template<class T>
 class pgLinkList
@@ -58,8 +59,9 @@ public:
 		}
 		return {};
 	}
-
-	void sort()
+	
+	template<typename L>
+	void sort(L& lambda) 
 	{
 		int totalCount = total();
 		int count = 0;
@@ -70,30 +72,41 @@ public:
 			pgNode<T>* nextNode = findNode->getPointer();
 			while (nextNode != nullptr)
 			{
-				if (findNode->getData() > nextNode->getData())
-				{
+				if(lambda(findNode->getData(), nextNode->getData()))
 					swap(findNode, nextNode);
-
-				}
 				findNode = nextNode;
 				nextNode = nextNode->getPointer();
 			}
 			count++;
 		}
+	}
 
+	auto sort()
+	{
+		auto x = [](T a, T b)
+		{
+			return a > b;
+		};
+		sort(x);
 	}
 
 	void swap(pgNode<T>*& firstNode, pgNode<T>*& nextNode)
 	{
 		pgNode<T>* prevNode = m_head;
+#ifdef logging 
 		cout << firstNode << " -> " << firstNode->getPointer() << endl;
 		cout << nextNode << " -> " << nextNode->getPointer() << endl;
+#endif
 		if (prevNode == firstNode)
 		{
-			firstNode->setPointer(nextNode->getPointer());
+			pgNode<T>* temp = nextNode->getPointer();
 			nextNode->setPointer(firstNode);
+			firstNode->setPointer(temp);
+			m_head = nextNode;
+#ifdef logging 
 			cout << firstNode << " -> " << firstNode->getPointer() << endl;
 			cout << nextNode << " -> " << nextNode->getPointer() << endl;
+#endif
 			return;
 		}
 		while(prevNode->getPointer() != firstNode && prevNode->getPointer())
@@ -104,8 +117,10 @@ public:
 		prevNode->setPointer(nextNode);
 		nextNode->setPointer(firstNode);
 		firstNode->setPointer(tempNode);
+#ifdef logging 
 		cout << firstNode << " -> " << firstNode->getPointer() << endl;
 		cout << nextNode << " -> " << nextNode->getPointer() << endl;
+#endif
 	}
 
 	T operator[](int i) { return find(i); }
@@ -140,6 +155,17 @@ public:
 		}
 		return total;
 	}
+
+	void __toString()
+	{
+		pgNode<T>* currentNode = m_head;
+		while (currentNode)
+		{
+			cout << currentNode->getData() << endl;
+			currentNode = currentNode->getPointer();
+		}
+	}
+
 private:
 	void findCurrentAndPrev(int index, pgNode<T>*& findNode, pgNode<T>*& prevNode)
 	{
